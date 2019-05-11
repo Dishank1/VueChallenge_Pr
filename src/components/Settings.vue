@@ -1,6 +1,6 @@
 <template>
-    <div id="app">
-        <router-view/>
+    <div>
+    <h1>This is an Settings page</h1>
     </div>
 </template>
 
@@ -9,7 +9,3 @@
 
     }
 </script>
-
-<style lang="scss">
-
-</style>
