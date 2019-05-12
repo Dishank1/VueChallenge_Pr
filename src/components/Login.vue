@@ -121,6 +121,7 @@
           fb.auth.signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password).then(user => {
               this.$store.commit('setCurrentUser', user.user)
               this.$store.dispatch('fetchUserProfile')
+              this.$store.dispatch('fetchQuestion')
               this.performingLoad = false
               this.$router.push('/home')
           }).catch(err => {
@@ -139,6 +140,7 @@
               displayName: this.signupForm.name
             }).then(() => {
               this.$store.dispatch('fetchUserProfile')
+              this.$store.dispatch('fetchQuestion')
               this.performingLoad = false
               this.$router.push('/home')
               }).catch(err => {

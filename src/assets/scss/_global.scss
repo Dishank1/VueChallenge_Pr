@@ -166,6 +166,23 @@ section {
 	}
 }
 
+.title{
+
+}
+
+.optionTable {
+	// flex-direction: row;
+	// justify-content: space-between;
+  // flex-wrap: nowrap;
+  // max-width: 90%;`
+}
+
+.questionClass{
+	display: flex;
+	flex-direction: column;
+  height: 100%;
+}
+
 .clear {
     clear: both;
 }

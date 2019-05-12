@@ -8,6 +8,7 @@ fb.auth.onAuthStateChanged(user => {
     if (user) {
         store.commit('setCurrentUser', user)
         store.dispatch('fetchUserProfile')
+        store.dispatch('fetchQuestion')
     }
 })
 
@@ -28,6 +29,11 @@ export const store = new Vuex.Store({
       state.currentQuestion = val
     }
   },
+  getters: {
+    getCurrentQuestion(state){
+      return state.currentQuestion
+    }
+  },
   actions: {
     clearData({ commit }){
       commit('setUserProfile', {}),
@@ -37,6 +43,13 @@ export const store = new Vuex.Store({
     fetchUserProfile({ commit, state }) {
       fb.usersCollection.doc(state.currentUser.uid).get().then(res => {
         commit('setUserProfile', res.data())
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    fetchQuestion({ commit }){
+      fb.questionsCollection.doc("kWxQN5ffi8quue0zOGuh").get().then(res => {
+        commit('setCurrentQuestion', res.data())
       }).catch(err => {
         console.log(err)
       })
