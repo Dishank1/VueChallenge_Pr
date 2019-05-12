@@ -157,7 +157,7 @@
             this.passwordResetSuccess = true
             this.resetPasswordForm.email = ''
           }).catch(err => {
-            console.log(err)
+            //console.log(err)
             this.performingLoad = false
             this.errorMessage = err.message
           })
