@@ -16,7 +16,8 @@ export const store = new Vuex.Store({
   state: {
     currentUser: null,
     userProfile: {},
-    currentQuestion: null
+    currentQuestion: null,
+    responses:null
   },
   mutations: {
     setCurrentUser(state, val) {
@@ -27,11 +28,24 @@ export const store = new Vuex.Store({
     },
     setCurrentQuestion(state,val){
       state.currentQuestion = val
+    },
+    setResponses(state,val){
+      state.responses = val
     }
   },
   getters: {
     getCurrentQuestion(state){
       return state.currentQuestion
+    },
+    getResponses({ state }){
+      let results;
+      fb.questionsCollection.doc("kWxQN5ffi8quue0zOGuh").collection('responses').get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data().selectedResponse);
+          results
+        })
+      })
     }
   },
   actions: {
@@ -47,7 +61,8 @@ export const store = new Vuex.Store({
         console.log(err)
       })
     },
-    fetchQuestion({ commit }){
+    fetchQuestion({ commit, state }){
+      //getQuestionKey(state)
       fb.questionsCollection.doc("kWxQN5ffi8quue0zOGuh").get().then(res => {
         commit('setCurrentQuestion', res.data())
       }).catch(err => {

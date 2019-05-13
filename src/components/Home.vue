@@ -1,81 +1,45 @@
 <template>
     <div class = "questionClass">
-      <section>
         <div class="title">
         <h1>{{currentQuestion.question}}</h1>
       </div>
       <div class="optionTable">
-        <ul id="options">
-          <button @click="handleSelectedOption" v-for="item in currentQuestion.options">
+        <ul id="options"  v-for="item in currentQuestion.options">
+          <button @click="handleSelectedOption(item)" height="100px" width="100px">
             {{ item }}
           </button>
         </ul>
       </div>
-      </section>
     </div>
 </template>
 
 <script>
-    // const fb = require('../firebaseConfig.js')
+    const fb = require('../firebaseConfig.js')
     import { mapState } from 'vuex'
 
     export default {
+      data:{
+        showResults : false,
+        performingLoad : false
+      },
       computed:{
        ...mapState(['currentUser','currentQuestion'])
      },
      methods:{
-       handleSelectedOption(){
-         
+       handleSelectedOption(item){
+       fb.db.collection('questions').doc("kWxQN5ffi8quue0zOGuh").collection('responses').add({
+         emailID: this.currentUser.email,
+         selectedResponse: item
+        }).then(() => {
+           this.performingLoad = false
+           this.showResults = true
+           // this.$router.push('/Results')
+           }).catch(err => {
+             this.errorMessage = err.message
+             this.performingLoad = false
+           })
        }
      }
     }
 
 </script>
-
-
-
-<!-- // console.log(fb.db.collection("results"));
-// var question = fb.db.collection("questions").doc("kWxQN5ffi8quue0zOGuh").collection("responses").doc
-
-// var questionsRef = fb.db.collection("questions")
-
-
-//    fb.db.collection('questions')
-//    .where('questionID', '==', '1')
-//    .get()
-//    .then(function(querySnapshot) {
-//      querySnapshot.forEach(function(doc) {
-//    console.log(doc.id, " => ", doc.data());
-//    });
-//  })
-// .catch(function(error) {
-//   console.log("Error getting documents: ", error);
-//  });
-
-// var query = questionsRef.where("questionID", "==", true)
-
-// console.log(query)
-
-// async getMarkers() {
-//   var markers = [];
-//   fb.db.collection("results").get()
-//     .done(function() {
-//     querySnapshot.docs.forEach(doc => {
-//       markers.push(doc.data());
-//     });
-//   });
-//   return markers;
-// }
-
-// question.get().then(function(doc) {
-//   if (doc.exists) {
-//     //var result = getMarkers();
-//     //console.log(getMarkers());
-//     console.log("Document data:", doc.data());
-//   } else {
-//     // doc.data() will be undefined in this case
-//   console.log("No such document!");
-//   }
-// }).catch(function(error) {
-//   console.log("Error getting document:", error);
-// }); -->

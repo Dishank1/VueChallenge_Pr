@@ -28,13 +28,12 @@ import 'firebase/firestore'
   // firebase collections
   const usersCollection = db.collection('users')
   const questionsCollection = db.collection('questions')
-  const resultsCollection = db.collection('results')
+  // const resultsCollection = db.collection('results')
 
   export {
       db,
       auth,
       currentUser,
       usersCollection,
-      questionsCollection,
-      resultsCollection
+      questionsCollection
   }

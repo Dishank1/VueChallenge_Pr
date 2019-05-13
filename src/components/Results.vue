@@ -1,6 +1,6 @@
 <template>
     <div>
-    <h1>This is an Settings page</h1>
+    <h1>Results Page</h1>
     </div>
 </template>
 
